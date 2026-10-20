@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+    <style>
+        table { border-collapse: collapse; width: 700px; }
+        th, td { border: 1px solid #999; padding: 6px; text-align: center; }
+        td.left { text-align: left; }
+        .paging a, .paging b { margin: 0 4px; }
+    </style>
+</head>
+<body>
+<h1>게시글 목록</h1>
+<p><a th:href="@{/Post/insert}">게시글 쓰기</a> | <a th:href="@{/}">메인</a></p>
+
+<table>
+    <thead>
+    <tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${list}">
+        <td th:text="${post.postNo}"></td>
+        <td class="left"><a th:href="@{/Post/read(postNo=${post.postNo})}" th:text="${post.title}"></a></td>
+        <td th:text="${post.writer}"></td>
+        <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(list)}">
+        <td colspan="4">등록된 게시글이 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이징 -->
+<div class="paging">
+    <a th:if="${page.page > 1}" th:href="@{/Post/list(page=1)}">&laquo;</a>
+    <a th:if="${page.startPage > 1}" th:href="@{/Post/list(page=${page.startPage - 1})}">&lt;</a>
+
+    <span th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+        <b th:if="${i == page.page}" th:text="${i}"></b>
+        <a th:unless="${i == page.page}" th:href="@{/Post/list(page=${i})}" th:text="${i}"></a>
+    </span>
+
+    <a th:if="${page.endPage < page.last}" th:href="@{/Post/list(page=${page.endPage + 1})}">&gt;</a>
+    <a th:if="${page.page < page.last}" th:href="@{/Post/list(page=${page.last})}">&raquo;</a>
+</div>
+</body>
+</html>

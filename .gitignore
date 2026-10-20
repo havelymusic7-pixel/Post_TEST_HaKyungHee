@@ -1,0 +1,20 @@
+.gradle/
+build/
+.idea/
+*.iml
+out/
+제출용/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs and local runtime files
+*.log
+logs/

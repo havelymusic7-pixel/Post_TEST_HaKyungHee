@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 조회</title>
+    <style>
+        table { border-collapse: collapse; width: 700px; }
+        th, td { border: 1px solid #999; padding: 8px; }
+        th { width: 100px; background: #eee; }
+    </style>
+</head>
+<body>
+<h1>게시글 조회</h1>
+<table>
+    <tr><th>번호</th><td th:text="${post.postNo}"></td></tr>
+    <tr><th>제목</th><td th:text="${post.title}"></td></tr>
+    <tr><th>작성자</th><td th:text="${post.writer}"></td></tr>
+    <tr><th>등록일</th><td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm')}"></td></tr>
+    <tr><th>내용</th><td style="white-space: pre-wrap;" th:text="${post.content}"></td></tr>
+</table>
+<p>
+    <a th:href="@{/Post/update(postNo=${post.postNo})}"><button type="button">수정</button></a>
+    <a th:href="@{/Post/list}"><button type="button">목록</button></a>
+</p>
+</body>
+</html>
